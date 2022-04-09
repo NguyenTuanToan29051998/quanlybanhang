@@ -16,9 +16,26 @@ module.exports = {
         '10px': '10px',
         '25px': '25px',
       },
-      // spacing: {
-      //   '25px': '25px',
-      // },
+      spacing: {
+        '25px': '25px',
+      },
+      backgroundImage: {
+        'after-header':
+          "url('https://bizweb.dktcdn.net/100/431/449/themes/834425/assets/bg-after-header.png?1640335531122')",
+        'before-footer':
+          "url('https://bizweb.dktcdn.net/100/431/449/themes/834425/assets/bg-before-footer.png?1640335531122')",
+      },
+      gridRow: {
+        'span-16': 'span 16 / span 16',
+      },
+      gridRowStart: {
+        // 8: '8',
+        // 9: '9',
+        // 10: '10',
+        // 11: '11',
+        // 12: '12',
+        // 13: '13',
+      },
     },
   },
   plugins: [],

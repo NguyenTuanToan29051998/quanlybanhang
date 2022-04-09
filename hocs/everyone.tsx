@@ -1,8 +1,11 @@
 import {NextPage} from 'next'
 import type {AppProps} from 'next/app'
 import Image from 'next/image'
-import {FC, ReactNode} from 'react'
+import {FC, ReactNode, useState} from 'react'
 import {NextPageContext} from 'next'
+import {useRouter} from 'next/router'
+import {DropdownItemComponent} from '../components/DropdownItemComponent'
+import {DropdownMenuComponent} from '../components/DropdownMenuComponent'
 
 interface GuestWrapperProps {
   pageProps?: object
@@ -12,230 +15,523 @@ function everyone(Content: NextPage): ReactNode {
   const EveryoneWrapper: NextPage<GuestWrapperProps> = ({
     pageProps,
   }: GuestWrapperProps) => {
+    // const [showDropdown, setShowDropdown] = useState('hidden')
+    const menuDropdown = [
+      'Trái cây',
+      'Thịt tươi',
+      'Hải sản tươi',
+      'Rau củ',
+      'Thực phẩm khô',
+      'Đồ uống',
+      'Bơ sữa',
+      'Thực phẩm tết',
+      'Hạt giống',
+      'Đồ ăn đóng hộp',
+      'Sản phẩm bán chạy',
+    ]
+    const listProducts = [
+      {
+        name: 'Ôi lê ruột đỏ',
+        price: 68000,
+        discount: 40,
+        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp22.jpg?v=1628522988000',
+        total: 150,
+      },
+      {
+        name: 'Trái cam mật',
+        price: 70000,
+        discount: 20,
+        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp5.jpg?v=1625548796000',
+        total: 70,
+      },
+      {
+        name: 'Dâu tây',
+        price: 18000,
+        discount: 20,
+        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp3.jpg?v=1628523053000',
+        total: 25,
+      },
+      {
+        name: 'Chanh tươi',
+        price: 40000,
+        discount: 20,
+        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
+        total: 150,
+      },
+      {
+        name: 'Chanh tươi',
+        price: 40000,
+        discount: 20,
+        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
+        total: 3,
+      },
+      {
+        name: 'Chanh tươi',
+        price: 40000,
+        discount: 20,
+        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
+        total: 7,
+      },
+    ]
+    const [cartSlidebar, setCartSlidebar] = useState('opacity-0')
+    const [count, setCount] = useState(0)
+    const router = useRouter()
     return (
       <>
-        <div className="bg-green-3ba66b">
-          <div className="container mx-auto">
-            <div className="grid h-[120px] grid-cols-12">
-              <div className="col-span-4 col-start-1 self-center">
-                <ul className="grid grid-cols-5 justify-items-center gap-4">
-                  <li className=" ">
-                    <a
-                      href="#"
-                      className=" text-sm font-medium text-white hover:text-orange-#ffb416">
-                      Trang chủ
-                    </a>
-                  </li>
-                  <li className="">
-                    <a
-                      href="#"
-                      className=" text-sm font-medium text-white hover:text-orange-#ffb416">
-                      Giới thiệu
-                    </a>
-                  </li>
-                  <li className="">
-                    <a
-                      href="#"
-                      className=" text-sm font-medium text-white hover:text-orange-#ffb416">
-                      Sản phẩm
-                    </a>
-                  </li>
-                  <li className="">
-                    <a
-                      href="#"
-                      className=" text-sm  font-medium text-white hover:text-orange-#ffb416">
-                      Tin tức
-                    </a>
-                  </li>
-                  <li className="">
-                    <a
-                      href="#"
-                      className=" text-sm font-medium text-white hover:text-orange-#ffb416">
-                      Liên hệ
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-span-3 col-start-5 self-center justify-self-center">
-                <>
-                  <Image
-                    src="https://bizweb.dktcdn.net/100/431/449/themes/834425/assets/logo.png?1642042407923"
-                    alt="logo"
-                    width={200}
-                    height={80}
-                    layout="intrinsic"
-                  />
-                </>
-              </div>
-              <div className="col-span-5 col-start-auto self-center">
-                <div className="grid grid-cols-6 gap-4">
-                  <div className="col-span-3 col-start-2">
-                    <div className="relative grid h-12">
-                      <input
-                        className="w-full rounded-full pl-[5%] text-sm outline-none"
-                        placeholder="Bạn cân tìm gì?"></input>
-                      <button className="absolute right-0 grid h-12 w-12 place-items-center rounded-[50%] bg-orange-#ffb416 text-white ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-7 w-7"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                          />
-                        </svg>
-                      </button>
+        <div>
+          <div className="relative z-50 bg-green-3ba66b">
+            <div className="container mx-auto ">
+              <div className="grid h-[120px] grid-cols-12">
+                <div className="col-span-4 col-start-1 self-center">
+                  <ul className="flex space-x-10 ">
+                    <li className=" ">
+                      <a
+                        onClick={() => router.push('/')}
+                        href="#"
+                        className=" text-sm font-medium text-white hover:text-orange-#ffb416">
+                        Trang chủ
+                      </a>
+                    </li>
+                    <li className="">
+                      <a
+                        href="#"
+                        className=" text-sm font-medium text-white hover:text-orange-#ffb416">
+                        Giới thiệu
+                      </a>
+                    </li>
+                    {/* <li
+                      className="relative mt-[1px] flex self-center "
+                      onMouseEnter={() => setShowDropdown('')}
+                      onMouseLeave={() => setShowDropdown('hidden')}>
+                      <a
+                        href="#"
+                        className=" self-center text-sm font-medium text-white hover:text-orange-#ffb416">
+                        Sản phẩm
+                      </a>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 self-center text-white"
+                        viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <ul
+                        className={`${showDropdown} absolute top-full grid auto-cols-max grid-flow-col rounded-xl bg-green-3ba66b bg-opacity-80`}>
+                        <div className="p-3">
+                          {menuDropdown.map((value) => {
+                            return (
+                              <>
+                                <DropdownItempComponent data={value} />
+                              </>
+                            )
+                          })}
+                        </div>
+                      </ul>
+                    </li> */}
+                    <DropdownMenuComponent data="Sản phẩm">
+                      {menuDropdown.map((value) => {
+                        return (
+                          <>
+                            <DropdownItemComponent bgColor={'bg-green-3ba66b'}>
+                              <a className="py-1" href="#" title={value}>
+                                {value}
+                              </a>
+                            </DropdownItemComponent>
+                          </>
+                        )
+                      })}
+                    </DropdownMenuComponent>
+                    <li className="bg-r">
+                      <a
+                        href="#"
+                        className=" text-sm  font-medium text-white hover:text-orange-#ffb416">
+                        Tin tức
+                      </a>
+                    </li>
+                    <li className="">
+                      <a
+                        href="#"
+                        className=" text-sm font-medium text-white hover:text-orange-#ffb416">
+                        Liên hệ
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-span-4 col-start-5 self-center justify-self-center">
+                  <>
+                    <Image
+                      src="https://bizweb.dktcdn.net/100/431/449/themes/834425/assets/logo.png?1642042407923"
+                      alt="logo"
+                      width={200}
+                      height={80}
+                      layout="intrinsic"
+                    />
+                  </>
+                </div>
+                <div className="col-span-4 col-start-auto self-center">
+                  <div className="grid grid-cols-6 gap-4">
+                    <div className="col-span-3 col-start-1">
+                      <div className="relative grid h-12">
+                        <input
+                          className="w-full rounded-full pl-[5%] text-sm text-[#333] outline-none "
+                          placeholder="Bạn cân tìm gì?"></input>
+                        <button className="absolute right-0 grid h-12 w-12 place-items-center rounded-[50%] bg-orange-#ffb416 text-white ">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-7 w-7 "
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div className="col-span-2 col-start-auto self-center">
+                      <ul className="grid grid-cols-3">
+                        <li className="relative text-white">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-8 w-8 stroke-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                            />
+                          </svg>
+
+                          <span className="absolute top-0 left-2/4 h-5 w-5 rounded-full bg-orange-#ffb416 text-center text-sm text-white ">
+                            1
+                          </span>
+                        </li>
+                        <li
+                          className="relative cursor-pointer text-white"
+                          onClick={() => setCartSlidebar('opacity-100')}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-8 w-8 stroke-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                            />
+                          </svg>
+                          <span className="absolute top-0 left-2/4 h-5 w-5 rounded-full bg-orange-#ffb416 text-center text-sm text-white">
+                            2
+                          </span>
+                        </li>
+                        <li className="text-white">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-8 w-8 stroke-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                  <div className="col-span-1 col-start-auto self-center">
-                    <ul className="grid grid-cols-3 gap-4">
-                      <li className="relative text-white">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-7 w-7"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
-                        <span className="absolute top-0 left-3/4 h-5 w-5 rounded-full bg-orange-#ffb416 text-center text-sm text-white ">
-                          1
-                        </span>
-                      </li>
-                      <li className="relative text-white">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-7 w-7"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                          />
-                        </svg>
-                        <span className="absolute top-0 left-3/4 h-5 w-5 rounded-full bg-orange-#ffb416 text-center text-sm text-white ">
-                          2
-                        </span>
-                      </li>
-                      <li className="text-white">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-7 w-7"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                          />
-                        </svg>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div className="h-[47px] w-full bg-after-header bg-center"></div>
         </div>
         <Content {...pageProps} />
-        <div className="bg-green-3ba66b">
-          <div className="container mx-auto">
-            <div className="grid grid-cols-3">
-              <div className="col-span-1 col-start-1 self-center text-center">
-                <h4 className="text-2xl text-white">
-                  <span>Đăng ký nhận thông tin</span>
-                </h4>
-                <p className="text-sm text-white">
-                  Đăng ký nhận bản tin để nhận ưu đãi đặc biệt về sản phẩm ND
-                  Fresh
-                </p>
-                <div className="">
-                  <form>
-                    <input
-                      type="email"
-                      value=""
-                      placeholder="Nhập email của bạn"
-                    />
-                    <span className="">
-                      <button
-                        className=""
-                        type="submit"
-                        aria-label="Đăng ký"
-                        name="subscribe">
-                        Đăng ký
-                      </button>
-                    </span>
-                  </form>
+        <div className="mt-12">
+          <div className="h-[47px] w-full bg-before-footer bg-center"></div>
+          <div className=" bg-green-3ba66b pt-12">
+            <div className="container mx-auto">
+              <div className="grid grid-cols-3">
+                <div className="col-span-1 col-start-1 mt-[70px] px-[50px] text-center">
+                  <h4 className="mb-25px text-lg font-medium uppercase text-white">
+                    <span>Đăng ký nhận thông tin</span>
+                  </h4>
+                  <p className="mb-4 text-sm leading-6 text-white">
+                    Đăng ký nhận bản tin để nhận ưu đãi đặc biệt về sản phẩm ND
+                    Fresh
+                  </p>
+                  <div className="relative grid">
+                    <form>
+                      <input
+                        className="w-full rounded-25px pr-[110px] pl-[5%] text-sm leading-10 text-[#333] outline-none"
+                        type="email"
+                        placeholder="Nhập email của bạn"
+                      />
+                      <span className=" absolute right-0">
+                        <button
+                          className="h-10 w-max rounded-r-25px bg-orange-#ffb416 px-4 text-white"
+                          type="submit"
+                          aria-label="Đăng ký"
+                          name="subscribe">
+                          Đăng ký
+                        </button>
+                      </span>
+                    </form>
+                  </div>
                 </div>
-              </div>
-              <div className="col-span-1 col-start-2">
-                <div className="">
-                  <a href="/">
-                    <Image
-                      src="https://bizweb.dktcdn.net/100/431/449/themes/834425/assets/logo_footer.png?1642042407923"
+                <div className="col-span-1 col-start-2">
+                  <div className="grid justify-items-center ">
+                    <img
+                      src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/logo_footer.png?1642042407923"
                       alt="ND Fresh"
-                      width={250}
-                      height={200}
+                      // width={250}
+                      // height={200}
                     />
-                  </a>
+                  </div>
+                  <div className="mt-4 px-[50px] text-center text-sm leading-6 text-white">
+                    Website thương mại điện tử ND Fresh do ND Group là đơn vị
+                    chủ quản, chịu trách nhiệm và thực hiện các giao dịch liên
+                    quan mua sắm sản phẩm hàng hoá tiêu dùng thiết yếu.
+                  </div>
+                  <div className="grid justify-items-center">
+                    <img
+                      className="relative -bottom-1/4"
+                      src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/img-footer.png?1642042407923"
+                      data-src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/img-footer.png?1642042407923"
+                      alt="ND Fresh"
+                      data-was-processed="true"
+                      // width={250}
+                      // height={200}
+                    />
+                  </div>
                 </div>
-                <div className="text_introduction">
-                  Website thương mại điện tử ND Fresh do ND Group là đơn vị chủ
-                  quản, chịu trách nhiệm và thực hiện các giao dịch liên quan
-                  mua sắm sản phẩm hàng hoá tiêu dùng thiết yếu.
-                </div>
-                <div className="img-footer d-lg-block d-none">
-                  <Image
-                    className=""
-                    src="https://bizweb.dktcdn.net/100/431/449/themes/834425/assets/img-footer.png?1642042407923"
-                    data-src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/img-footer.png?1642042407923"
-                    alt="ND Fresh"
-                    data-was-processed="true"
-                    width={250}
-                    height={200}
-                  />
+                <div className="col-span-1 col-start-3 mt-[70px] px-[50px] text-center">
+                  <h4 className="mb-25px text-lg font-medium uppercase text-white">
+                    <span>
+                      Liên hệ với chúng tôi{' '}
+                      <i className="fa fa-plus hidden" aria-hidden="true"></i>
+                    </span>
+                  </h4>
+                  <ul>
+                    <li className="text-sm leading-6 text-white">
+                      <strong className="font-medium">Địa chỉ:</strong> 266 Đội
+                      Cấn, Ba Đình, Hà Nội
+                    </li>
+                    <li className="text-sm leading-6 text-white">
+                      <strong className="font-medium">Điện thoại:</strong>{' '}
+                      <a className="fone" href="tel:19006750">
+                        19006750
+                      </a>
+                    </li>
+                    <li className="text-sm leading-6 text-white">
+                      <strong className="font-medium">Email:</strong>{' '}
+                      <a href="mailto:support@sapo.vn">support@sapo.vn</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div className="col-span-1 col-start-3">
-                <h4 className="title-menu">
-                  <span>
-                    Liên hệ với chúng tôi{' '}
-                    <i className="fa fa-plus hidden" aria-hidden="true"></i>
-                  </span>
-                </h4>
-                <ul>
-                  <li>
-                    <strong>Địa chỉ:</strong> 266 Đội Cấn, Ba Đình, Hà Nội
-                  </li>
-                  <li>
-                    <strong>Điện thoại:</strong>{' '}
-                    <a className="fone" href="tel:19006750">
-                      19006750
-                    </a>
-                  </li>
-                  <li>
-                    <strong>Email:</strong>{' '}
-                    <a href="mailto:support@sapo.vn">support@sapo.vn</a>
-                  </li>
-                </ul>
+            </div>
+          </div>
+          <div className="bg-[#198754] py-[18px]">
+            <div className="container mx-auto">
+              <div className="grid grid-cols-3">
+                <div className="co col-span-1 col-start-1">
+                  <div className="text-center text-sm text-white">
+                    @ Bản quyền thuộc về{' '}
+                    <a href="https://nd-fresh-1.mysapo.net/">ND Fresh</a>
+                    <span className="d-lg-inline-block d-none"> | </span>
+                    <span className="opacity1">
+                      Cung cấp bởi{' '}
+                      <a href="javascript:;" rel="noopener">
+                        Sapo
+                      </a>
+                    </span>
+                  </div>
+                </div>
+
+                <div></div>
+                <div></div>
               </div>
             </div>
           </div>
         </div>
+        {cartSlidebar !== 'opacity-0' ? (
+          <div
+            className={`fixed left-0 top-0 bottom-0 right-0 z-[999] w-full bg-[#363636] opacity-50`}
+            onClick={() => setCartSlidebar('opacity-0')}></div>
+        ) : (
+          ''
+        )}
+        {/* sidebar cart */}
+        <div
+          className={`fixed top-0 flex h-full w-[360px] flex-col bg-white ${
+            cartSlidebar !== 'opacity-0'
+              ? 'right-0 z-[999] opacity-100 duration-700'
+              : '-right-1/4 z-[999] opacity-0 duration-700'
+          } `}>
+          <div className="relative h-[6%] px-4 py-4">
+            <h4 className="font-bold uppercase">Giỏ hàng</h4>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute right-0 top-0 h-6 w-6 stroke-1 text-base font-semibold"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <div className="h-[80%] overflow-y-scroll">
+            {listProducts.map((item) => {
+              return (
+                <>
+                  <div className="grid snap-start grid-cols-3 gap-3 p-4">
+                    <div className="">
+                      <a className="grid" href="#" title={item.name}>
+                        <img
+                          className="w-[85%] justify-self-center"
+                          src={item.img}
+                          alt="Thịt bò"
+                        />
+                      </a>
+                    </div>
+                    <div>
+                      <div className="text-[13px] font-semibold">
+                        <a href="/thit-bo" title={item.name}>
+                          {item.name}
+                        </a>
+                      </div>
+                      <div>
+                        <label className="text-xs">Số lượng</label>
+                        <div>
+                          <div className="grid grid-cols-3 pt-2">
+                            <div
+                              className="grid w-full place-items-center border"
+                              onClick={() => setCount(item.total - 1)}>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth="2">
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M18 12H6"
+                                />
+                              </svg>
+                            </div>
+                            <span className="w-full border py-1 text-center text-sm ">
+                              {count == 0 ? 1 : count}
+                            </span>
+                            <div
+                              className="grid w-full place-items-center border"
+                              onClick={() => setCount(item.total + 1)}>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth="2">
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="relative">
+                      <div className="absolute bottom-0 ">
+                        <div>
+                          <span className="text-sm font-semibold text-red-#eb3e32">
+                            {item.price.toLocaleString('it-IT', {
+                              style: 'currency',
+                              currency: 'VND',
+                            })}
+                          </span>
+                        </div>
+                        <a
+                          className="text-[13px] text-green-3ba66b"
+                          href=""
+                          data-id="48274541"
+                          title="Bỏ sản phẩm">
+                          Bỏ sản phẩm
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )
+            })}
+          </div>
+
+          <div className="absolute bottom-0 mb-3 h-[14%] w-full bg-white p-[10px]">
+            <hr />
+            <div className="pt-5">
+              <div className="flex">
+                <div className="w-[50%]">Tổng tiền:</div>
+                <div className="">
+                  <span className="font-semibold text-red-#eb3e32">
+                    574.000₫
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 rounded-[4px] bg-green-3ba66b text-center text-white">
+              <button
+                type="button"
+                className="p-[10px] "
+                id="btn-proceed-checkout"
+                title="Thanh toán"
+                onClick={() => router.push('/user/checkout')}>
+                Thanh toán
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* notification */}
+        {/* <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div> */}
+        {/* thanh toán */}
       </>
     )
   }

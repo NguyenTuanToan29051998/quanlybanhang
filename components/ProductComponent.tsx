@@ -1,5 +1,8 @@
 import React, {FC, useEffect, useState} from 'react'
 import {Product} from '../models/product'
+import {useAppDispatch, useAppSelector} from '../redux/hook'
+import {addToCart} from '../redux/slices/cartSlice'
+
 interface Props {
   data: Product
   index: number
@@ -7,17 +10,22 @@ interface Props {
 
 export const ProductComponent: FC<Props> = ({data, index}: Props) => {
   const [clName, setClName] = useState('opacity-0 -bottom-1/4')
+  const dispatch = useAppDispatch()
+  const handleAddToCart = () => {
+    console.log(data, 'xxx')
+    dispatch(addToCart(data))
+  }
   return (
     <div
-      className={`col-start-${index} col-span-1 `}
+      className={`col-start-${index} col-span-1`}
       onMouseEnter={() => setClName('opacity-100 bottom-2.5')}
       onMouseLeave={() => setClName('opacity-0 -bottom-1/4')}>
       <div className="w-1/4 rounded-tl-10px rounded-br-10px bg-orange-#F14E18 text-center text-white">
         <span>-{data.discount}%</span>
       </div>
-      <div className="relative z-0 text-center">
+      <div className="relative z-0 text-center hover:cursor-pointer">
         <img
-          className="bg-white hover:scale-90  hover:cursor-pointer hover:duration-500"
+          className="bg-white hover:scale-90  hover:duration-500"
           src={
             data.img
               ? data.img
@@ -27,11 +35,11 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
         <div
           className={`${clName} absolute grid h-10 w-full grid-cols-4 justify-items-center duration-500`}>
           <a
-            className={`col-span-1 col-start-2 grid  w-10  place-items-center rounded-25px bg-red-#eb3e32 text-white hover:bg-orange-#ffb416 `}
+            className={`col-span-1 col-start-2 ml-[15%]  grid  w-10 place-items-center rounded-25px bg-red-#eb3e32 text-white hover:bg-orange-#ffb416`}
             title="Thêm vào yêu thích">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7"
+              className="h-7 w-7 stroke-1"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -44,11 +52,12 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
             </svg>
           </a>
           <a
-            className={`col-span-1 col-start-3 grid w-10 place-items-center rounded-25px bg-green-3ba66b text-white hover:bg-orange-#ffb416 `}
-            title="Thêm vào giỏ hàng">
+            className={`col-span-1 col-start-3 mr-[15%] grid w-10 place-items-center rounded-25px bg-green-3ba66b text-white hover:bg-orange-#ffb416`}
+            title="Thêm vào giỏ hàng"
+            onClick={() => handleAddToCart()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7"
+              className="h-7 w-7 stroke-1"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -62,10 +71,13 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
           </a>
         </div>
       </div>
-      <div className="relative z-20 bg-white text-center">
-        <a href="/dao-do-my" title={data.name}>
-          {data.name}
-        </a>
+      <div className="relative z-20 mx-[10px] bg-white text-center">
+        <div className="cursor-pointer hover:text-orange-#ffb416">
+          <a href="/dao-do-my" title={data.name}>
+            {data.name}
+          </a>
+        </div>
+
         <div className="pb-4">
           <span className="pr-2 text-[15px] text-red-#eb3e32 ">
             {(data.discount

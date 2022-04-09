@@ -62,7 +62,7 @@ export const Favourite: FC = () => {
                 <div className="col-span-3 col-start-2">
                   <div className="relative grid h-12">
                     <input
-                      className="w-full rounded-full pl-[5%] text-sm outline-none"
+                      className="w-full rounded-full pl-[5%] text-sm text-[#333] outline-none"
                       placeholder="Bạn cân tìm gì?"></input>
                     <button className="absolute right-0 grid h-12 w-12 place-items-center rounded-[50%] bg-orange-#ffb416 text-white ">
                       <svg
