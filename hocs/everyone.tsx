@@ -1,11 +1,18 @@
 import {NextPage} from 'next'
 import type {AppProps} from 'next/app'
 import Image from 'next/image'
-import {FC, ReactNode, useState} from 'react'
+import {FC, ReactNode, useEffect, useState} from 'react'
 import {NextPageContext} from 'next'
 import {useRouter} from 'next/router'
 import {DropdownItemComponent} from '../components/DropdownItemComponent'
 import {DropdownMenuComponent} from '../components/DropdownMenuComponent'
+import {useAppDispatch, useAppSelector} from '../app/hook'
+import {
+  addQuantity,
+  initCart,
+  removeItemFromCart,
+  substractQuantity,
+} from '../features/cartSlice'
 
 interface GuestWrapperProps {
   pageProps?: object
@@ -73,9 +80,18 @@ function everyone(Content: NextPage): ReactNode {
         total: 7,
       },
     ]
+
     const [cartSlidebar, setCartSlidebar] = useState('opacity-0')
-    const [count, setCount] = useState(0)
+    const dispatch = useAppDispatch()
+    const cart = useAppSelector((state) => state.cart)
+    console.log(cart.cartItems, 'cartItems')
     const router = useRouter()
+    useEffect(() => {
+      dispatch(initCart())
+    }, [])
+    // useEffect(() => {
+    //   dispatch(getTotals())
+    // }, [cart])
     return (
       <>
         <div>
@@ -99,39 +115,7 @@ function everyone(Content: NextPage): ReactNode {
                         Giới thiệu
                       </a>
                     </li>
-                    {/* <li
-                      className="relative mt-[1px] flex self-center "
-                      onMouseEnter={() => setShowDropdown('')}
-                      onMouseLeave={() => setShowDropdown('hidden')}>
-                      <a
-                        href="#"
-                        className=" self-center text-sm font-medium text-white hover:text-orange-#ffb416">
-                        Sản phẩm
-                      </a>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 self-center text-white"
-                        viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <ul
-                        className={`${showDropdown} absolute top-full grid auto-cols-max grid-flow-col rounded-xl bg-green-3ba66b bg-opacity-80`}>
-                        <div className="p-3">
-                          {menuDropdown.map((value) => {
-                            return (
-                              <>
-                                <DropdownItempComponent data={value} />
-                              </>
-                            )
-                          })}
-                        </div>
-                      </ul>
-                    </li> */}
+
                     <DropdownMenuComponent data="Sản phẩm">
                       {menuDropdown.map((value) => {
                         return (
@@ -234,7 +218,7 @@ function everyone(Content: NextPage): ReactNode {
                             />
                           </svg>
                           <span className="absolute top-0 left-2/4 h-5 w-5 rounded-full bg-orange-#ffb416 text-center text-sm text-white">
-                            2
+                            {cart.cartTotalQuantity}
                           </span>
                         </li>
                         <li className="text-white">
@@ -401,7 +385,7 @@ function everyone(Content: NextPage): ReactNode {
             </svg>
           </div>
           <div className="h-[80%] overflow-y-scroll">
-            {listProducts.map((item) => {
+            {cart.cartItems.map((item) => {
               return (
                 <>
                   <div className="grid snap-start grid-cols-3 gap-3 p-4">
@@ -423,10 +407,10 @@ function everyone(Content: NextPage): ReactNode {
                       <div>
                         <label className="text-xs">Số lượng</label>
                         <div>
-                          <div className="grid grid-cols-3 pt-2">
+                          <div className="grid select-none grid-cols-3 pt-2">
                             <div
-                              className="grid w-full place-items-center border"
-                              onClick={() => setCount(item.total - 1)}>
+                              className="grid w-full place-items-center border hover:cursor-pointer"
+                              onClick={() => dispatch(substractQuantity(item))}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-4"
@@ -441,12 +425,13 @@ function everyone(Content: NextPage): ReactNode {
                                 />
                               </svg>
                             </div>
-                            <span className="w-full border py-1 text-center text-sm ">
-                              {count == 0 ? 1 : count}
-                            </span>
+                            <input
+                              className="w-full border py-1 text-center text-sm"
+                              value={item.quantity}
+                            />
                             <div
-                              className="grid w-full place-items-center border"
-                              onClick={() => setCount(item.total + 1)}>
+                              className="grid w-full place-items-center border hover:cursor-pointer"
+                              onClick={() => dispatch(addQuantity(item))}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-4"
@@ -476,10 +461,10 @@ function everyone(Content: NextPage): ReactNode {
                           </span>
                         </div>
                         <a
-                          className="text-[13px] text-green-3ba66b"
-                          href=""
+                          className="text-[13px] text-green-3ba66b hover:cursor-pointer hover:underline"
                           data-id="48274541"
-                          title="Bỏ sản phẩm">
+                          title="Bỏ sản phẩm"
+                          onClick={() => dispatch(removeItemFromCart(item))}>
                           Bỏ sản phẩm
                         </a>
                       </div>
@@ -497,7 +482,7 @@ function everyone(Content: NextPage): ReactNode {
                 <div className="w-[50%]">Tổng tiền:</div>
                 <div className="">
                   <span className="font-semibold text-red-#eb3e32">
-                    574.000₫
+                    {cart.cartTotalAmount}₫
                   </span>
                 </div>
               </div>

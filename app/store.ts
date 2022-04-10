@@ -1,7 +1,7 @@
 import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit'
 import {createWrapper} from 'next-redux-wrapper'
-import cartReducer from './slices/cartSlice'
-import productsReducer from './slices/productsSlice'
+import cartReducer from '../features/cartSlice'
+import productsReducer from '../features/productsSlice'
 
 const store = configureStore({
   reducer: {

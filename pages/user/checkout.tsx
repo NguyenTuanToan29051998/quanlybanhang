@@ -1,51 +1,9 @@
 import React, {FC} from 'react'
 import everyone from '../../hocs/everyone'
+import {useAppDispatch, useAppSelector} from '../../app/hook'
 
 const Checkout: FC = () => {
-  const listProducts = [
-    {
-      name: 'Ôi lê ruột đỏ',
-      price: 68000,
-      discount: 40,
-      img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp22.jpg?v=1628522988000',
-      total: 150,
-    },
-    {
-      name: 'Trái cam mật',
-      price: 70000,
-      discount: 20,
-      img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp5.jpg?v=1625548796000',
-      total: 70,
-    },
-    {
-      name: 'Dâu tây',
-      price: 18000,
-      discount: 20,
-      img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp3.jpg?v=1628523053000',
-      total: 25,
-    },
-    {
-      name: 'Chanh tươi',
-      price: 40000,
-      discount: 20,
-      img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
-      total: 150,
-    },
-    {
-      name: 'Chanh tươi',
-      price: 40000,
-      discount: 20,
-      img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
-      total: 3,
-    },
-    {
-      name: 'Chanh tươi',
-      price: 40000,
-      discount: 20,
-      img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
-      total: 7,
-    },
-  ]
+  const cartItems = useAppSelector((state) => state.cart.cartItems)
   return (
     <div className="mx-auto max-w-screen-lg">
       <div className="grid grid-cols-2 ">
@@ -304,7 +262,7 @@ const Checkout: FC = () => {
             <hr />
             <div className="h-[380px] pl-10">
               <div className="grid h-full grid-cols-3 overflow-y-scroll py-4 ">
-                {listProducts.map((item) => {
+                {cartItems.map((item) => {
                   return (
                     <>
                       <div className="col-span-2 col-start-1 pb-3">
@@ -319,7 +277,9 @@ const Checkout: FC = () => {
                               alt="Thịt bò"
                             />
                             <div className="absolute -top-[15%] right-[15%] h-6 min-w-[24px] rounded-full border bg-slate-800 text-center text-white">
-                              <div className="px-1 text-sm">2</div>
+                              <div className="px-1 text-sm">
+                                {item.quantity}
+                              </div>
                             </div>
                           </a>
                           <a

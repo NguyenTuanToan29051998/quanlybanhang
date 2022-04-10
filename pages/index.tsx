@@ -1,6 +1,6 @@
 import type {NextPage} from 'next'
 import {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from '../redux/hook'
+import {useAppDispatch, useAppSelector} from '../app/hook'
 import {ProductComponent} from '../components/ProductComponent'
 import everyone from '../hocs/everyone'
 import {Product} from '../models/product'
@@ -52,6 +52,7 @@ const listProducts: Product[] = [
 
 const Home: NextPage = () => {
   const products = useAppSelector((state) => state.products)
+
   return (
     <div>
       <div className="relative pt-10">

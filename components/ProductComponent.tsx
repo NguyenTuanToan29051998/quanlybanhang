@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react'
 import {Product} from '../models/product'
-import {useAppDispatch, useAppSelector} from '../redux/hook'
-import {addToCart} from '../redux/slices/cartSlice'
+import {useAppDispatch, useAppSelector} from '../app/hook'
+import {addItemToCart} from '../features/cartSlice'
 
 interface Props {
   data: Product
@@ -12,9 +12,9 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
   const [clName, setClName] = useState('opacity-0 -bottom-1/4')
   const dispatch = useAppDispatch()
   const handleAddToCart = () => {
-    console.log(data, 'xxx')
-    dispatch(addToCart(data))
+    dispatch(addItemToCart(data))
   }
+
   return (
     <div
       className={`col-start-${index} col-span-1`}
