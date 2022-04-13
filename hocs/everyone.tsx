@@ -22,7 +22,6 @@ function everyone(Content: NextPage): ReactNode {
   const EveryoneWrapper: NextPage<GuestWrapperProps> = ({
     pageProps,
   }: GuestWrapperProps) => {
-    // const [showDropdown, setShowDropdown] = useState('hidden')
     const menuDropdown = [
       'Trái cây',
       'Thịt tươi',
@@ -36,62 +35,28 @@ function everyone(Content: NextPage): ReactNode {
       'Đồ ăn đóng hộp',
       'Sản phẩm bán chạy',
     ]
-    const listProducts = [
-      {
-        name: 'Ôi lê ruột đỏ',
-        price: 68000,
-        discount: 40,
-        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp22.jpg?v=1628522988000',
-        total: 150,
-      },
-      {
-        name: 'Trái cam mật',
-        price: 70000,
-        discount: 20,
-        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp5.jpg?v=1625548796000',
-        total: 70,
-      },
-      {
-        name: 'Dâu tây',
-        price: 18000,
-        discount: 20,
-        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp3.jpg?v=1628523053000',
-        total: 25,
-      },
-      {
-        name: 'Chanh tươi',
-        price: 40000,
-        discount: 20,
-        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
-        total: 150,
-      },
-      {
-        name: 'Chanh tươi',
-        price: 40000,
-        discount: 20,
-        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
-        total: 3,
-      },
-      {
-        name: 'Chanh tươi',
-        price: 40000,
-        discount: 20,
-        img: '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp6.jpg?v=1625548895000',
-        total: 7,
-      },
-    ]
 
-    const [cartSlidebar, setCartSlidebar] = useState('opacity-0')
+    const router = useRouter()
     const dispatch = useAppDispatch()
     const cart = useAppSelector((state) => state.cart)
     console.log(cart.cartItems, 'cartItems')
-    const router = useRouter()
+    const [cartSlidebar, setCartSlidebar] = useState('opacity-0')
+    const {cartTotalQuantity, cartTotalAmount} = cart.cartItems.reduce(
+      (cartTotal, cartItem) => {
+        cartTotal.cartTotalQuantity += cartItem.quantity
+        cartTotal.cartTotalAmount += cartItem.price * cartItem.quantity
+        return cartTotal
+      },
+      {
+        cartTotalQuantity: 0,
+        cartTotalAmount: 0,
+      },
+    )
+    console.log(cartTotalQuantity, cartTotalAmount, 'res')
     useEffect(() => {
       dispatch(initCart())
     }, [])
-    // useEffect(() => {
-    //   dispatch(getTotals())
-    // }, [cart])
+
     return (
       <>
         <div>
@@ -182,7 +147,9 @@ function everyone(Content: NextPage): ReactNode {
                     </div>
                     <div className="col-span-2 col-start-auto self-center">
                       <ul className="grid grid-cols-3">
-                        <li className="relative text-white">
+                        <li
+                          className="relative cursor-pointer text-white"
+                          onClick={() => router.push('/user/favorite_product')}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-8 w-8 stroke-1"
@@ -218,7 +185,7 @@ function everyone(Content: NextPage): ReactNode {
                             />
                           </svg>
                           <span className="absolute top-0 left-2/4 h-5 w-5 rounded-full bg-orange-#ffb416 text-center text-sm text-white">
-                            {cart.cartTotalQuantity}
+                            {cartTotalQuantity}
                           </span>
                         </li>
                         <li className="text-white">
@@ -482,18 +449,22 @@ function everyone(Content: NextPage): ReactNode {
                 <div className="w-[50%]">Tổng tiền:</div>
                 <div className="">
                   <span className="font-semibold text-red-#eb3e32">
-                    {cart.cartTotalAmount}₫
+                    {cartTotalAmount.toLocaleString('it-IT', {
+                      style: 'currency',
+                      currency: 'VND',
+                    })}
                   </span>
                 </div>
               </div>
             </div>
-            <div className="mt-6 rounded-[4px] bg-green-3ba66b text-center text-white">
+            <div
+              className="mt-6 rounded-[4px] bg-green-3ba66b text-center text-white hover:cursor-pointer hover:bg-[#2e8053]"
+              onClick={() => router.push('/user/checkout')}>
               <button
                 type="button"
                 className="p-[10px] "
                 id="btn-proceed-checkout"
-                title="Thanh toán"
-                onClick={() => router.push('/user/checkout')}>
+                title="Thanh toán">
                 Thanh toán
               </button>
             </div>

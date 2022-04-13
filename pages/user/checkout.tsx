@@ -4,6 +4,17 @@ import {useAppDispatch, useAppSelector} from '../../app/hook'
 
 const Checkout: FC = () => {
   const cartItems = useAppSelector((state) => state.cart.cartItems)
+  const {cartTotalQuantity, cartTotalAmount} = cartItems.reduce(
+    (cartTotal, cartItem) => {
+      cartTotal.cartTotalQuantity += cartItem.quantity
+      cartTotal.cartTotalAmount += cartItem.price * cartItem.quantity
+      return cartTotal
+    },
+    {
+      cartTotalQuantity: 0,
+      cartTotalAmount: 0,
+    },
+  )
   return (
     <div className="mx-auto max-w-screen-lg">
       <div className="grid grid-cols-2 ">
@@ -258,7 +269,9 @@ const Checkout: FC = () => {
         </div>
         <div className="col-span-1 border-l-[1px]">
           <div className="h-screen">
-            <h2 className="py-5 pl-10 ">Đơn hàng (39 sản phẩm)</h2>
+            <h2 className="py-5 pl-10 ">
+              Đơn hàng ({cartTotalQuantity} sản phẩm)
+            </h2>
             <hr />
             <div className="h-[380px] pl-10">
               <div className="grid h-full grid-cols-3 overflow-y-scroll py-4 ">
@@ -331,7 +344,12 @@ const Checkout: FC = () => {
               <div className="py-5">
                 <div className="relative flex ">
                   <div>Tổng cộng</div>
-                  <div className="absolute right-0">2.500.000đ</div>
+                  <div className="absolute right-0">
+                    {cartTotalAmount.toLocaleString('it-IT', {
+                      style: 'currency',
+                      currency: 'VND',
+                    })}
+                  </div>
                 </div>
                 <div className="grid grid-cols-4 gap-3 py-5">
                   <div className="col-span-3 flex self-center">

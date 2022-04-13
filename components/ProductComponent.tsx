@@ -1,7 +1,8 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {Dispatch, FC, SetStateAction, useEffect, useState} from 'react'
 import {Product} from '../models/product'
 import {useAppDispatch, useAppSelector} from '../app/hook'
 import {addItemToCart} from '../features/cartSlice'
+import {useRouter} from 'next/router'
 
 interface Props {
   data: Product
@@ -11,9 +12,7 @@ interface Props {
 export const ProductComponent: FC<Props> = ({data, index}: Props) => {
   const [clName, setClName] = useState('opacity-0 -bottom-1/4')
   const dispatch = useAppDispatch()
-  const handleAddToCart = () => {
-    dispatch(addItemToCart(data))
-  }
+  const router = useRouter()
 
   return (
     <div
@@ -31,7 +30,8 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
               ? data.img
               : '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp2.jpg?v=1625549083000'
           }
-          alt={data.name}></img>
+          alt={data.name}
+          onClick={() => router.push('/user/detail_product')}></img>
         <div
           className={`${clName} absolute grid h-10 w-full grid-cols-4 justify-items-center duration-500`}>
           <a
@@ -54,7 +54,9 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
           <a
             className={`col-span-1 col-start-3 mr-[15%] grid w-10 place-items-center rounded-25px bg-green-3ba66b text-white hover:bg-orange-#ffb416`}
             title="Thêm vào giỏ hàng"
-            onClick={() => handleAddToCart()}>
+            onClick={() => {
+              dispatch(addItemToCart(data))
+            }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-7 w-7 stroke-1"
