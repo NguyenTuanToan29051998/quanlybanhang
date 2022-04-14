@@ -1,12 +1,12 @@
 import type {NextPage} from 'next'
 import {useEffect, useState} from 'react'
-import {useAppDispatch, useAppSelector} from '../app/hook'
+import {useAppDispatch, useAppSelector} from '../redux/hook'
 import {ProductComponent} from '../components/ProductComponent'
 import everyone from '../hocs/everyone'
 import {Product} from '../models/product'
 
 const Home: NextPage = () => {
-  const products = useAppSelector((state) => state.products)
+  const products = useAppSelector((state) => state.products.products)
 
   return (
     <div>
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
 
       <div className="pt-10">
         <div className="container mx-auto">
-          <div className="grid grid-cols-6 gap-6">
+          <div className="grid grid-cols-6 gap-5">
             {products.map((item, index) => {
               return (
                 <>

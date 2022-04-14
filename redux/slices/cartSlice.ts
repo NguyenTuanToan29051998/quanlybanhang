@@ -1,29 +1,10 @@
-import {createSlice} from '@reduxjs/toolkit'
-
-export interface cartInitialState {
-  name: string
-  price: number
-  discount: number
-  img: string
-  id: number
-}
-
-// const initialState: cartInitialState = [
-//   {
-//     name: '',
-//     price: 0,
-//     discount: 0,
-//     img: '',
-//     id: 0,
-//   },
-// ]
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     cartItems: [],
-    // cartTotalQuantity: 0,
-    // cartTotalAmount: 0,
+    status: null,
   },
   reducers: {
     initCart: (state) => {
@@ -39,8 +20,6 @@ const cartSlice = createSlice({
       const objIndex = state.cartItems.findIndex(
         (obj) => obj.id == action.payload.id,
       )
-      console.log(objIndex, 'xxx')
-
       if (objIndex >= 0) {
         state.cartItems[objIndex].quantity += 1
       } else {

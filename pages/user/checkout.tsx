@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
 import everyone from '../../hocs/everyone'
-import {useAppDispatch, useAppSelector} from '../../app/hook'
+import {useAppDispatch, useAppSelector} from '../../redux/hook'
 
 const Checkout: FC = () => {
   const cartItems = useAppSelector((state) => state.cart.cartItems)

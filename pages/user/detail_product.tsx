@@ -1,10 +1,10 @@
 import React, {FC, useEffect, useState} from 'react'
 import everyone from '../../hocs/everyone'
-import {useAppDispatch, useAppSelector} from '../../app/hook'
+import {useAppDispatch, useAppSelector} from '../../redux/hook'
 import {ProductComponent} from '../../components/ProductComponent'
 
 const DetailProduct: FC = () => {
-  const products = useAppSelector((state) => state.products)
+  const products = useAppSelector((state) => state.products.products)
   const [tabProductPolicy, setTabProductPolicy] = useState([true, false, false])
   const [index, setIndex] = useState(0)
   const [index1, setIndex1] = useState(1)
@@ -37,10 +37,6 @@ const DetailProduct: FC = () => {
   const handleNext = () => {
     setTransL(true)
     setTransR(false)
-    // console.log((index + 1) % imagesForProduct.length, 'xx')
-    // console.log((index1 + 1) % imagesForProduct.length, 'yy')
-    // setIndex((index + 1) % imagesForProduct.length)
-    // setIndex1((index1 + 1) % imagesForProduct.length)
   }
 
   useEffect(() => {
@@ -404,7 +400,7 @@ const DetailProduct: FC = () => {
               />
             </svg>
           </div>
-          <div className="grid grid-cols-5 gap-6">
+          <div className="grid grid-cols-5 gap-5">
             {products.slice(0, 5).map((item, index) => {
               return (
                 <>
@@ -462,7 +458,7 @@ const DetailProduct: FC = () => {
               />
             </svg>
           </div>
-          <div className="grid grid-cols-5 gap-6">
+          <div className="grid grid-cols-5 gap-5">
             {products.slice(0, 5).map((item, index) => {
               return (
                 <>

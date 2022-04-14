@@ -1,8 +1,9 @@
 import React, {Dispatch, FC, SetStateAction, useEffect, useState} from 'react'
 import {Product} from '../models/product'
-import {useAppDispatch, useAppSelector} from '../app/hook'
-import {addItemToCart} from '../features/cartSlice'
+import {useAppDispatch, useAppSelector} from '../redux/hook'
+import {addItemToCart} from '../redux/slices/cartSlice'
 import {useRouter} from 'next/router'
+import {testApi} from '../redux/slices/productsSlice'
 
 interface Props {
   data: Product
@@ -13,6 +14,22 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
   const [clName, setClName] = useState('opacity-0 -bottom-1/4')
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const {list} = useAppSelector((state) => state.products)
+
+  // useEffect(() => {
+  //   // console.log(list, 'testapi')
+  //   async function fetchList() {
+  //     const response = await fetch(
+  //       'http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=1',
+  //     )
+  //     const responseJSON = await response.json()
+  //     console.log({responseJSON})
+  //   }
+  //   fetchList()
+  // }, [])
+  useEffect(() => {
+    dispatch(testApi())
+  }, [])
 
   return (
     <div
@@ -22,9 +39,9 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
       <div className="w-1/4 rounded-tl-10px rounded-br-10px bg-orange-#F14E18 text-center text-white">
         <span>-{data.discount}%</span>
       </div>
-      <div className="relative z-0 text-center hover:cursor-pointer">
+      <div className="relative z-0 overflow-hidden text-center hover:cursor-pointer">
         <img
-          className="bg-white hover:scale-90  hover:duration-500"
+          className="ml-[5%] flex w-[90%] bg-white hover:scale-105 hover:duration-500"
           src={
             data.img
               ? data.img

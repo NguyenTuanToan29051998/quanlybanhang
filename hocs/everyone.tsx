@@ -6,13 +6,13 @@ import {NextPageContext} from 'next'
 import {useRouter} from 'next/router'
 import {DropdownItemComponent} from '../components/DropdownItemComponent'
 import {DropdownMenuComponent} from '../components/DropdownMenuComponent'
-import {useAppDispatch, useAppSelector} from '../app/hook'
+import {useAppDispatch, useAppSelector} from '../redux/hook'
 import {
   addQuantity,
   initCart,
   removeItemFromCart,
   substractQuantity,
-} from '../features/cartSlice'
+} from '../redux/slices/cartSlice'
 
 interface GuestWrapperProps {
   pageProps?: object
@@ -39,7 +39,6 @@ function everyone(Content: NextPage): ReactNode {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const cart = useAppSelector((state) => state.cart)
-    console.log(cart.cartItems, 'cartItems')
     const [cartSlidebar, setCartSlidebar] = useState('opacity-0')
     const {cartTotalQuantity, cartTotalAmount} = cart.cartItems.reduce(
       (cartTotal, cartItem) => {
@@ -52,7 +51,6 @@ function everyone(Content: NextPage): ReactNode {
         cartTotalAmount: 0,
       },
     )
-    console.log(cartTotalQuantity, cartTotalAmount, 'res')
     useEffect(() => {
       dispatch(initCart())
     }, [])
