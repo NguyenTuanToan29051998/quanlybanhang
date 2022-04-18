@@ -22,14 +22,32 @@ const Checkout: FC = () => {
           <div>
             <h2 className="mb-3">Thông tin khách hàng</h2>
             <div>
-              <div className="mb-2 flex gap-6">
-                <div>
-                  <input className="mr-1" type="radio" />
-                  <label htmlFor="">Anh</label>
+              <div className="mt-4 mb-2 flex gap-10">
+                <div className="flex items-center">
+                  <input
+                    id="push-everythin"
+                    name="push-notification"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <label
+                    htmlFor="push-everythin"
+                    className="ml-3 block text-sm font-medium text-gray-700">
+                    Anh
+                  </label>
                 </div>
-                <div>
-                  <input className="mr-1" type="radio" />
-                  <label htmlFor="">Chị</label>
+                <div className="flex items-center">
+                  <input
+                    id="push-emai"
+                    name="push-notification"
+                    type="radio"
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <label
+                    htmlFor="push-emai"
+                    className="ml-3 block text-sm font-medium text-gray-700">
+                    Chị
+                  </label>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -46,17 +64,116 @@ const Checkout: FC = () => {
           </div>
           <div>
             <h2 className="mb-3">Chọn cách thức nhận hàng</h2>
-            <div className="flex gap-6">
-              <div className="">
-                <input type="radio" className="mr-1" checked={true} />
-                <label htmlFor="">Giao tận nơi</label>
+            <div className="mt-4 mb-2 flex gap-10">
+              <div className="flex items-center">
+                <input
+                  id="push-everything"
+                  name="push-notifications"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <label
+                  htmlFor="push-everything"
+                  className="ml-3 block text-sm font-medium text-gray-700">
+                  Giao tận nơi
+                </label>
               </div>
-              <div className="">
-                <input type="radio" className="mr-1" />
-                <label htmlFor="">Nhận tại siêu thị</label>
+              <div className="flex items-center">
+                <input
+                  id="push-email"
+                  name="push-notifications"
+                  type="radio"
+                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <label
+                  htmlFor="push-email"
+                  className="ml-3 block text-sm font-medium text-gray-700">
+                  Nhận tại siêu thị
+                </label>
               </div>
             </div>
-            <div className="grid  grid-cols-2 gap-4 border p-5">
+            <div className="grid grid-cols-6 gap-6 border p-5">
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium text-gray-700">
+                  Country
+                </label>
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country-name"
+                  className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Mexico</option>
+                </select>
+              </div>
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium text-gray-700">
+                  Country
+                </label>
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country-name"
+                  className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Mexico</option>
+                </select>
+              </div>
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium text-gray-700">
+                  Country
+                </label>
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country-name"
+                  className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Mexico</option>
+                </select>
+              </div>
+              <div className="col-span-6 sm:col-span-3">
+                <label htmlFor="first-name" className="block text-sm ">
+                  Số nhà, tên đường
+                </label>
+                <input
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  autoComplete="given-name"
+                  className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-6 gap-6 border p-5">
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium text-gray-700">
+                  Country
+                </label>
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country-name"
+                  className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Mexico</option>
+                </select>
+              </div>
+            </div>
+
+            {/* <div className="grid  grid-cols-2 gap-4 border p-5">
               <select className="rounded border bg-white p-2 text-[#333]">
                 <option value="">---</option>
                 <option value="1" data-select2-id="select2-data-15-x56c">
@@ -264,7 +381,7 @@ const Checkout: FC = () => {
                   Bắc Kạn
                 </option>
               </select>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="col-span-1 border-l-[1px]">

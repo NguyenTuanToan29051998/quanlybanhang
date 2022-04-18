@@ -50,6 +50,9 @@ module.exports = {
           '100%': {transform: 'translateX(0)'},
         },
       },
+      borderWidth: {
+        1: '1px',
+      },
     },
   },
   plugins: [],

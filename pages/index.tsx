@@ -4,12 +4,23 @@ import {useAppDispatch, useAppSelector} from '../redux/hook'
 import {ProductComponent} from '../components/ProductComponent'
 import everyone from '../hocs/everyone'
 import {Product} from '../models/product'
+import {useRouter} from 'next/router'
 
 const Home: NextPage = () => {
   const products = useAppSelector((state) => state.products.products)
-
+  const router = useRouter()
   return (
     <div>
+      <button
+        className="border bg-green-100"
+        onClick={() => router.push('user/add_product')}>
+        Button
+      </button>
+      <button
+        className="ml-10 border bg-green-100"
+        onClick={() => router.push('user/form_product')}>
+        Form
+      </button>
       <div className="relative pt-10">
         <h2 className="absolute right-0 top-0 left-0 flex justify-center font-bold">
           <a

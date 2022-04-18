@@ -186,7 +186,9 @@ function everyone(Content: NextPage): ReactNode {
                             {cartTotalQuantity}
                           </span>
                         </li>
-                        <li className="text-white">
+                        <li
+                          className="cursor-pointer text-white"
+                          onClick={() => router.push('/user/login')}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-8 w-8 stroke-1"
@@ -216,7 +218,7 @@ function everyone(Content: NextPage): ReactNode {
           <div className=" bg-green-3ba66b pt-12">
             <div className="container mx-auto">
               <div className="grid grid-cols-3">
-                <div className="col-span-1 col-start-1 mt-[70px] px-[50px] text-center">
+                <div className="col-span-3 mt-[70px] px-[50px] text-center lg:col-span-1">
                   <h4 className="mb-25px text-lg font-medium uppercase text-white">
                     <span>Đăng ký nhận thông tin</span>
                   </h4>
@@ -243,7 +245,7 @@ function everyone(Content: NextPage): ReactNode {
                     </form>
                   </div>
                 </div>
-                <div className="col-span-1 col-start-2">
+                <div className="col-span-3 mt-[70px] lg:col-span-1">
                   <div className="grid justify-items-center ">
                     <img
                       src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/logo_footer.png?1642042407923"
@@ -259,7 +261,7 @@ function everyone(Content: NextPage): ReactNode {
                   </div>
                   <div className="grid justify-items-center">
                     <img
-                      className="relative -bottom-1/4"
+                      className="relative -bottom-1/4 "
                       src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/img-footer.png?1642042407923"
                       data-src="//bizweb.dktcdn.net/100/431/449/themes/834425/assets/img-footer.png?1642042407923"
                       alt="ND Fresh"
@@ -269,7 +271,7 @@ function everyone(Content: NextPage): ReactNode {
                     />
                   </div>
                 </div>
-                <div className="col-span-1 col-start-3 mt-[70px] px-[50px] text-center">
+                <div className="col-span-3 mt-[70px] px-[50px] text-center lg:col-span-1">
                   <h4 className="mb-25px text-lg font-medium uppercase text-white">
                     <span>
                       Liên hệ với chúng tôi{' '}
@@ -299,7 +301,7 @@ function everyone(Content: NextPage): ReactNode {
           <div className="bg-[#198754] py-[18px]">
             <div className="container mx-auto">
               <div className="grid grid-cols-3">
-                <div className="co col-span-1 col-start-1">
+                <div className="col-span-1 col-start-1">
                   <div className="text-center text-sm text-white">
                     @ Bản quyền thuộc về{' '}
                     <a href="https://nd-fresh-1.mysapo.net/">ND Fresh</a>

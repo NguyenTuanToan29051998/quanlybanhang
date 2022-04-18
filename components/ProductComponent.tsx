@@ -14,7 +14,8 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
   const [clName, setClName] = useState('opacity-0 -bottom-1/4')
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const {list} = useAppSelector((state) => state.products)
+  // const {list} = useAppSelector((state) => state.products)
+  // console.log(list)
 
   // useEffect(() => {
   //   // console.log(list, 'testapi')
@@ -27,10 +28,6 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
   //   }
   //   fetchList()
   // }, [])
-  useEffect(() => {
-    dispatch(testApi())
-  }, [])
-
   return (
     <div
       className={`col-start-${index} col-span-1`}

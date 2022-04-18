@@ -1,17 +1,26 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+// const API = axios.create({
+//   baseURL: process.env.REACT_APP_URL_API + 'api/v1',
+// })
 
-export const testApi = createAsyncThunk('products/testApi', async () => {
-  // const res = await fetch(
-  //   'http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=1',
-  // )
-  // console.log('RESPONSE:', res)
-  // const data = await res.json()
-  // return data
-  const re = await fetch(
-    'http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=1',
-  ).then((res) => res.json())
-  return re
-})
+// export const testApi = async () => {
+//   const re = await fetch(
+//     'http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=1',
+//   ).then((res) => res.json())
+//   return re
+// }
+
+export const testApi = createAsyncThunk(
+  'products/testApi',
+  async (objProduct: object) => {
+    console.log(objProduct, 'objslice')
+    return await fetch('http://localhost:3001/api/product', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(objProduct),
+    }).then((res) => res.json())
+  },
+)
 
 const productsSlice = createSlice({
   name: 'products',
@@ -73,20 +82,14 @@ const productsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(testApi.pending, (state) => {
-      console.log('pending')
-
       state.loadding = true
     })
     builder.addCase(testApi.fulfilled, (state, action) => {
-      console.log('fulfilled')
-
       state.loadding = false
       state.list = action.payload
     })
     builder.addCase(testApi.rejected, (state) => {
-      console.log('rejected')
-
-      state.loadding = true
+      state.loadding = false
     })
   },
 })
