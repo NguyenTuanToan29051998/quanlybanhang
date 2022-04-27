@@ -420,14 +420,14 @@ const Checkout: FC = () => {
                           </a>
                         </div>
                       </div>
-                      <div className="relative col-span-1 col-start-3">
+                      {/* <div className="relative col-span-1 col-start-3">
                         <div className="absolute right-0 bottom-1/2 text-sm">
                           {item.price.toLocaleString('it-IT', {
                             style: 'currency',
                             currency: 'VND',
                           })}
                         </div>
-                      </div>
+                      </div> */}
                     </>
                   )
                 })}

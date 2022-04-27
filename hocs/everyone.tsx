@@ -421,7 +421,7 @@ function everyone(Content: NextPage): ReactNode {
                       <div className="absolute bottom-0 ">
                         <div>
                           <span className="text-sm font-semibold text-red-#eb3e32">
-                            {item.price.toLocaleString('it-IT', {
+                            {Number(item.price).toLocaleString('it-IT', {
                               style: 'currency',
                               currency: 'VND',
                             })}

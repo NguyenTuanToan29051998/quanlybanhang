@@ -3,7 +3,7 @@ import {Product} from '../models/product'
 import {useAppDispatch, useAppSelector} from '../redux/hook'
 import {addItemToCart} from '../redux/slices/cartSlice'
 import {useRouter} from 'next/router'
-import {testApi} from '../redux/slices/productsSlice'
+import Image from 'next/image'
 
 interface Props {
   data: Product
@@ -39,13 +39,12 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
       <div className="relative z-0 overflow-hidden text-center hover:cursor-pointer">
         <img
           className="ml-[5%] flex w-[90%] bg-white hover:scale-105 hover:duration-500"
-          src={
-            data.img
-              ? data.img
-              : '//bizweb.dktcdn.net/thumb/large/100/431/449/products/sp2.jpg?v=1625549083000'
-          }
+          src={data.img ? data.img.split(',')[data.display - 1] : 'img'}
           alt={data.name}
-          onClick={() => router.push('/user/detail_product')}></img>
+          // height={320}
+          // layout="intrinsic"
+          onClick={() => router.push('/user/detail_product')}
+        />
         <div
           className={`${clName} absolute grid h-10 w-full grid-cols-4 justify-items-center duration-500`}>
           <a
@@ -97,7 +96,8 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
         <div className="pb-4">
           <span className="pr-2 text-[15px] text-red-#eb3e32 ">
             {(data.discount
-              ? data.price - (data.price * data.discount) / 100
+              ? Number(data.exitPrice) -
+                (Number(data.exitPrice) * Number(data.discount)) / 100
               : ''
             ).toLocaleString('it-IT', {
               style: 'currency',
@@ -105,7 +105,7 @@ export const ProductComponent: FC<Props> = ({data, index}: Props) => {
             })}
           </span>
           <span className="text-[15px] line-through">
-            {data.price.toLocaleString('it-IT', {
+            {Number(data.exitPrice).toLocaleString('it-IT', {
               style: 'currency',
               currency: 'VND',
             })}

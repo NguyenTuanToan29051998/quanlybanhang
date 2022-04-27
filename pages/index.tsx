@@ -5,10 +5,76 @@ import {ProductComponent} from '../components/ProductComponent'
 import everyone from '../hocs/everyone'
 import {Product} from '../models/product'
 import {useRouter} from 'next/router'
+import {useDispatch} from 'react-redux'
+import {
+  addProduct,
+  getListProduct,
+  getTotalProduct,
+} from '../redux/slices/productsSlice'
 
 const Home: NextPage = () => {
   const products = useAppSelector((state) => state.products.products)
+  const totalCount = Object.values(
+    useAppSelector((state) => state.products.totalCount),
+  )[0]
+  const dispatch = useDispatch()
   const router = useRouter()
+  const [currentPage, setCurrentPage] = useState(0)
+  const defaultPageSize = 6
+  const [paramsProduct, setParamsProduct] = useState({
+    limit: defaultPageSize,
+    skip: currentPage,
+  })
+
+  const totalPage = totalCount
+    ? totalCount % defaultPageSize != 0
+      ? Math.floor(totalCount / defaultPageSize) + 1
+      : Math.floor(totalCount / defaultPageSize)
+    : 1
+
+  const handlePage = (page) => {
+    console.log(page, 'page')
+    console.log(currentPage, 'cur')
+
+    if (page != currentPage + 1) {
+      setParamsProduct({
+        ...paramsProduct,
+        limit: defaultPageSize,
+        skip: defaultPageSize * (page - 1),
+      })
+      setCurrentPage(page - 1)
+    }
+  }
+
+  const handlePrePage = () => {
+    if (currentPage > 0) {
+      setParamsProduct({
+        ...paramsProduct,
+        limit: defaultPageSize,
+        skip: (currentPage - 1) * defaultPageSize,
+      })
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPage - 1) {
+      setParamsProduct({
+        ...paramsProduct,
+        limit: defaultPageSize,
+        skip: (currentPage + 1) * defaultPageSize,
+      })
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  useEffect(() => {
+    dispatch(getListProduct(paramsProduct))
+  }, [paramsProduct])
+
+  useEffect(() => {
+    dispatch(getTotalProduct())
+  }, [])
   return (
     <div>
       <button
@@ -18,7 +84,7 @@ const Home: NextPage = () => {
       </button>
       <button
         className="ml-10 border bg-green-100"
-        onClick={() => router.push('user/form_product')}>
+        onClick={() => router.push('admin/product')}>
         Form
       </button>
       <div className="relative pt-10">
@@ -57,7 +123,7 @@ const Home: NextPage = () => {
               />
             </svg>
           </div>
-          <div className="grid grid-flow-col divide-x-[1px]">
+          <div className="grid grid-cols-4 divide-x-[1px]">
             {products.slice(0, 4).map((item, index) => {
               return (
                 <>
@@ -88,7 +154,7 @@ const Home: NextPage = () => {
       </div>
 
       <div className="pt-10">
-        <div className="container mx-auto">
+        <div className="container relative mx-auto">
           <div className="grid grid-cols-6 gap-5">
             {products.map((item, index) => {
               return (
@@ -99,6 +165,63 @@ const Home: NextPage = () => {
                 </>
               )
             })}
+          </div>
+          <div className="absolute right-0 cursor-pointer pt-10">
+            <nav
+              className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
+              aria-label="Pagination">
+              <a
+                className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50"
+                onClick={handlePrePage}>
+                <span className="sr-only">Previous</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </a>
+              {[...Array(totalPage)].map((_, index) => (
+                <>
+                  <a
+                    // href="#"
+                    // aria-current="page"
+                    className="relative z-10 inline-flex items-center border  border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600"
+                    onClick={() => handlePage(index + 1)}>
+                    {index + 1}
+                  </a>
+                </>
+              ))}
+              {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
+              <span className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700">
+                ...
+              </span>
+              <a
+                className="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50"
+                onClick={handleNextPage}>
+                <span className="sr-only">Next</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            </nav>
           </div>
         </div>
       </div>

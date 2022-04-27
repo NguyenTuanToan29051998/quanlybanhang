@@ -1,7 +1,14 @@
 export interface Product {
   name: string
-  discount?: number
-  price: number
-  img?: string
-  id?: number
+  img: string
+  display: number
+  barcode: string
+  description: string
+  warehouseQuantity: number
+  totalQuantity: number
+  storeQuantity: number
+  entryPrice: string
+  exitPrice: string
+  discount: string
+  idStore: number
 }
